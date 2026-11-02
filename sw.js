@@ -2,7 +2,7 @@ const CACHE_NAME = 'pakqatar-v2';
 const urlsToCache = [
   './',
   './index.html',
-  './logo.png',
+  './logo.PNG',
   './manifest.json'
 ];
 

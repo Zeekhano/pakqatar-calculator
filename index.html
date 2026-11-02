@@ -3,214 +3,295 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="Pak-Qatar Calc">
+    <title>Pak-Qatar Takaful - Smart Profit Calculator</title>
     <link rel="manifest" href="manifest.json">
-    <meta name="theme-color" content="#006838">
-    <title>Pak-Qatar Takaful Calculator</title>
+    <meta name="theme-color" content="#8B1538">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #F5F5F5;
-            padding: 16px;
-            max-width: 500px;
-            margin: 0 auto;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         
-        .container {
-            background: white;
-            border-radius: 12px;
-            padding: 24px 20px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-        }
-        
-        .logo {
-            text-align: center;
-            margin-bottom: 20px;
-            padding-bottom: 16px;
-            border-bottom: 2px solid #E5E5E5;
-        }
-        
-        .logo img {
-            max-width: 280px;
+        .app-container {
             width: 100%;
-            height: auto;
+            max-width: 480px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 35px 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.5s ease;
         }
         
-        h1 {
-            text-align: center;
-            color: #000000;
-            font-size: 18px;
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .logo { text-align: center; margin-bottom: 15px; }
+        .logo img { max-width: 130px; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1)); }
+        
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h1 { 
+            color: #8B1538; 
+            font-size: 26px; 
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        .header p { color: #666; font-size: 13px; font-weight: 400; }
+        
+        .input-group { margin-bottom: 22px; }
+        .input-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 10px;
+            color: #333;
             font-weight: 600;
-            margin: 16px 0 4px 0;
+            font-size: 14px;
         }
         
-        .subtitle {
-            text-align: center;
+        .input-wrapper {
+            position: relative;
+        }
+        
+        .input-wrapper span {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
             color: #8B1538;
-            font-size: 14px;
-            font-weight: 500;
-            margin-bottom: 24px;
-        }
-        
-        label {
-            display: block;
-            color: #1A1A1A;
             font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
         }
         
         input {
             width: 100%;
-            padding: 14px;
-            border: 2px solid #E0E0E0;
-            border-radius: 8px;
+            padding: 15px 15px 15px 45px;
+            border: 2px solid #e8e8e8;
+            border-radius: 15px;
             font-size: 16px;
-            margin-bottom: 18px;
+            font-weight: 600;
+            color: #333;
+            transition: all 0.3s;
+            background: #f8f9fa;
         }
         
         input:focus {
             outline: none;
-            border-color: #006838;
-            box-shadow: 0 0 0 3px rgba(0,104,56,0.1);
+            border-color: #8B1538;
+            background: white;
+            box-shadow: 0 0 0 4px rgba(139, 21, 56, 0.1);
         }
         
         button {
             width: 100%;
-            background: linear-gradient(135deg, #006838 0%, #00512C 100%);
+            padding: 16px;
+            background: linear-gradient(135deg, #8B1538 0%, #C41E3A 100%);
             color: white;
             border: none;
-            padding: 16px;
-            border-radius: 8px;
-            font-size: 16px;
+            border-radius: 15px;
+            font-size: 17px;
             font-weight: 700;
             cursor: pointer;
-            margin-top: 8px;
-            box-shadow: 0 4px 12px rgba(0,104,56,0.3);
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(139, 21, 56, 0.4);
+            margin-top: 10px;
         }
         
-        button:active {
-            transform: scale(0.98);
+        button:active { transform: scale(0.98); }
+        
+        #result { margin-top: 30px; display: none; }
+        #result.show { display: block; animation: fadeIn 0.4s ease; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
         }
         
-        .result {
-            margin-top: 24px;
+        .result-header {
+            background: linear-gradient(135deg, #8B1538 0%, #C41E3A 100%);
+            color: white;
             padding: 20px;
-            background: linear-gradient(135deg, #F0F9F4 0%, #E8F5E9 100%);
-            border-left: 4px solid #8B1538;
-            border-radius: 8px;
-            display: none;
+            border-radius: 15px 15px 0 0;
+            text-align: center;
         }
         
-        .result.show {
-            display: block;
+        .result-header h3 { font-size: 18px; margin-bottom: 5px; }
+        .result-header p { font-size: 13px; opacity: 0.9; }
+        
+        .result-body {
+            background: white;
+            border-radius: 0 0 15px 15px;
+            padding: 5px 20px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
         }
         
-        .result-row {
+        .profit-card {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 14px;
-            font-size: 15px;
+            align-items: center;
+            padding: 16px;
+            margin-top: 12px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #8B1538;
+            transition: all 0.3s;
         }
         
-        .result-row:last-child {
-            margin-bottom: 0;
-            padding-top: 14px;
-            border-top: 2px solid #8B1538;
-            font-weight: 700;
-            font-size: 18px;
-            color: #006838;
+        .profit-card:hover { background: #f0f0f0; transform: translateX(5px); }
+        
+        .profit-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #555;
+            font-weight: 600;
+            font-size: 14px;
         }
+        
+        .profit-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #8B1538 0%, #C41E3A 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+        }
+        
+        .profit-value {
+            color: #8B1538;
+            font-weight: 700;
+            font-size: 16px;
+        }
+        
+        .total-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: linear-gradient(135deg, #8B1538 0%, #C41E3A 100%);
+            border-radius: 15px;
+            text-align: center;
+            color: white;
+        }
+        
+        .total-box .label { font-size: 13px; opacity: 0.9; margin-bottom: 8px; }
+        .total-box .value { font-size: 28px; font-weight: 700; }
         
         .footer {
             text-align: center;
-            margin-top: 24px;
-            padding-top: 16px;
-            border-top: 1px solid #E5E5E5;
+            margin-top: 25px;
             font-size: 11px;
-            color: #8B1538;
-            font-weight: 500;
+            color: #999;
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <div class="app-container">
         <div class="logo">
             <img src="logo.PNG" alt="Pak-Qatar Takaful">
         </div>
         
-        <h1>Profit Rate Calculator</h1>
-        <p class="subtitle">Together for Better</p>
+        <div class="header">
+            <h1>Smart Profit Calculator</h1>
+            <p>Together for Better | Instant Breakdown</p>
+        </div>
         
-        <label>Investment Amount (PKR)</label>
-        <input type="number" id="amount" placeholder="e.g. 100000">
-        
-    
-        
-        <label>Expected Profit Rate (%)</label>
-        <input type="number" id="rate" placeholder="e.g. 12" step="0.1">
-        
-        <button onclick="calculate()">Calculate Profit</button>
-        
-        <div class="result" id="result">
-            <div class="result-row">
-                <span>Principal Amount:</span>
-                <span id="principal">-</span>
-            </div>
-            <div class="result-row">
-                <span>Total Profit:</span>
-                <span id="profit">-</span>
-            </div>
-            <div class="result-row">
-                <span>Maturity Value:</span>
-                <span id="total">-</span>
+        <div class="input-group">
+            <label>💰 Investment Amount</label>
+            <div class="input-wrapper">
+                <span>PKR</span>
+                <input type="number" id="amount" placeholder="100,000">
             </div>
         </div>
         
+        <div class="input-group">
+            <label>📈 Expected Profit Rate</label>
+            <div class="input-wrapper">
+                <span>%</span>
+                <input type="number" id="rate" step="0.01" placeholder="9.51">
+            </div>
+        </div>
+        
+        <button onclick="calculate()">Calculate Profit Instantly ⚡</button>
+        
+        <div id="result"></div>
+        
         <div class="footer">
-            © Pak-Qatar Takaful Limited | Together for Better
+            © Pak-Qatar Takaful Limited | Professional Calculator
         </div>
     </div>
 
     <script>
-        function calculate() {
-    let amount = parseFloat(document.getElementById('amount').value);
-    let rate = parseFloat(document.getElementById('rate').value);
-    
-    if (!amount || !rate) {
-        alert('Amount aur Rate dalo');
-        return;
-    }
-    
-    let yearly = (amount * rate) / 100;
-    let monthly = yearly / 12;
-    let weekly = yearly / 52;
-    let daily = yearly / 365;
-    
-    document.getElementById('result').innerHTML = `
-        <div style="background:#f0f8ff; padding:20px; border-radius:12px; margin-top:20px;">
-            <h3 style="color:#8B1538; margin-top:0;">Profit Breakdown</h3>
-            <p><b>Investment:</b> PKR ${amount.toLocaleString()}</p>
-            <p><b>Rate:</b> ${rate}%</p>
-            <hr>
-            <p><b>Daily:</b> PKR ${daily.toFixed(2)}</p>
-            <p><b>Weekly:</b> PKR ${weekly.toFixed(2)}</p>
-            <p><b>Monthly:</b> PKR ${monthly.toFixed(2)}</p>
-            <p><b>Yearly:</b> PKR ${yearly.toFixed(2)}</p>
-        </div>
-    `;
-}
-        
         if ('serviceWorker' in navigator) {
-          navigator.serviceWorker.register('sw.js');
+            navigator.serviceWorker.register('sw.js');
+        }
+
+        function calculate() {
+            let amount = parseFloat(document.getElementById('amount').value);
+            let rate = parseFloat(document.getElementById('rate').value);
+            
+            if (!amount || !rate || amount <= 0 || rate <= 0) {
+                alert('⚠️ Please enter valid Amount and Rate');
+                return;
+            }
+            
+            let yearly = (amount * rate) / 100;
+            let monthly = yearly / 12;
+            let weekly = yearly / 52;
+            let daily = yearly / 365;
+            let total = amount + yearly;
+            
+            document.getElementById('result').innerHTML = `
+                <div class="result-header">
+                    <h3>Profit Breakdown Ready ✨</h3>
+                    <p>Investment: PKR ${amount.toLocaleString()} @ ${rate}%</p>
+                </div>
+                <div class="result-body">
+                    <div class="profit-card">
+                        <div class="profit-label">
+                            <div class="profit-icon">📅</div>
+                            <span>Daily Profit</span>
+                        </div>
+                        <div class="profit-value">PKR ${daily.toFixed(2)}</div>
+                    </div>
+                    <div class="profit-card">
+                        <div class="profit-label">
+                            <div class="profit-icon">📆</div>
+                            <span>Weekly Profit</span>
+                        </div>
+                        <div class="profit-value">PKR ${weekly.toFixed(2)}</div>
+                    </div>
+                    <div class="profit-card">
+                        <div class="profit-label">
+                            <div class="profit-icon">🗓️</div>
+                            <span>Monthly Profit</span>
+                        </div>
+                        <div class="profit-value">PKR ${monthly.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                    </div>
+                    <div class="profit-card">
+                        <div class="profit-label">
+                            <div class="profit-icon">📊</div>
+                            <span>Yearly Profit</span>
+                        </div>
+                        <div class="profit-value">PKR ${yearly.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                    </div>
+                    <div class="total-box">
+                        <div class="label">Total Maturity Value (After 1 Year)</div>
+                        <div class="value">PKR ${total.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</div>
+                    </div>
+                </div>
+            `;
+            document.getElementById('result').classList.add('show');
         }
     </script>
 </body>

@@ -193,6 +193,29 @@
             font-size: 11px;
             color: #999;
         }
+        .creator {
+    color: #8B1538 !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    margin: 8px 0 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    animation: glow 2s ease-in-out infinite;
+}
+
+.creator span {
+    background: linear-gradient(135deg, #8B1538 0%, #C41E3A 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 17px;
+    text-shadow: 0 0 20px rgba(139, 21, 56, 0.3);
+}
+
+@keyframes glow {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
     </style>
 </head>
 <body>
@@ -202,9 +225,10 @@
         </div>
         
         <div class="header">
-            <h1>Smart Profit Calculator</h1>
-            <p>Together for Better | Instant Breakdown</p>
-        </div>
+    <h1>Smart Profit Calculator</h1>
+    <p class="creator">Developed by <span>Zaid Nasir Khan</span></p>
+    
+</div>
         
         <div class="input-group">
             <label>💰 Investment Amount</label>

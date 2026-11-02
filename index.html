@@ -1,660 +1,209 @@
-<html lang="en"><head><style>* { -webkit-text-size-adjust: 109.00000000000001% !important; }</style><style>
-@font-face {
-  font-family: "Optimistic";
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-  src: url("/fonts/OptimisticAI_VF_Optimized.woff2") format("woff2");
-}
-@font-face {
-  font-family: "Optimistic Mono";
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/OptimisticMono_W_TextRegular.woff2") format("woff2");
-}
-:where(html) {
-  font-family: "Optimistic", system-ui, sans-serif;
-}
-:where(code, pre, kbd, samp) {
-  font-family: "Optimistic Mono", ui-monospace, monospace;
-}
-</style>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Pak-Qatar Family Takaful - Profit Calculator</title>
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        -webkit-tap-highlight-color: transparent;
-    }
-    
-    :root {
-        --pq-primary: #006747;
-        --pq-primary-dark: #004d35;
-        --pq-primary-light: #E6F4EF;
-        --pq-white: #FFFFFF;
-        --pq-gray-50: #F9FAFB;
-        --pq-gray-100: #F3F4F6;
-        --pq-gray-200: #E5E7EB;
-        --pq-gray-600: #4B5563;
-        --pq-gray-900: #111827;
-        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    }
-    
-    html {
-        font-size: 16px;
-    }
-    
-    body {
-        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-        background: var(--pq-gray-50);
-        color: var(--pq-gray-900);
-        line-height: 1.5;
-        min-height: 100vh;
-        padding-bottom: env(safe-area-inset-bottom);
-    }
-    
-    /* Header */
-    .header {
-        background: var(--pq-primary);
-        color: var(--pq-white);
-        padding: 1.25rem 1rem;
-        box-shadow: var(--shadow-md);
-        position: sticky;
-        top: 0;
-        z-index: 100;
-    }
-    
-    .header-content {
-        max-width: 600px;
-        margin: 0 auto;
-    }
-    
-    .logo-section {
-        display: flex;
-        align-items: center;
-        gap: 0.875rem;
-        margin-bottom: 0.5rem;
-    }
-    
-    .logo-placeholder {
-        width: 48px;
-        height: 48px;
-        background: var(--pq-white);
-        border-radius: 12px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-    }
-    
-    .logo-placeholder svg {
-        width: 28px;
-        height: 28px;
-        fill: var(--pq-primary);
-    }
-    
-    .brand-info h1 {
-        font-size: 1.125rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-    }
-    
-    .brand-info p {
-        font-size: 0.75rem;
-        opacity: 0.95;
-        margin-top: 0.125rem;
-    }
-    
-    .developer-credit {
-        font-size: 0.625rem;
-        opacity: 0.8;
-        text-align: right;
-        margin-top: 0.25rem;
-    }
-    
-    /* Main Container */
-    .container {
-        max-width: 600px;
-        margin: 0 auto;
-        padding: 1rem;
-    }
-    
-    /* Card */
-    .card {
-        background: var(--pq-white);
-        border-radius: 16px;
-        box-shadow: var(--shadow-sm);
-        overflow: hidden;
-        margin-bottom: 1rem;
-    }
-    
-    .card-header {
-        padding: 1.25rem 1.25rem 1rem;
-        border-bottom: 2px solid var(--pq-primary-light);
-    }
-    
-    .card-header h2 {
-        font-size: 1.125rem;
-        font-weight: 700;
-        color: var(--pq-primary);
-        margin-bottom: 0.25rem;
-    }
-    
-    .card-header p {
-        font-size: 0.875rem;
-        color: var(--pq-gray-600);
-    }
-    
-    .card-body {
-        padding: 1.25rem;
-    }
-    
-    /* Form Elements */
-    .form-group {
-        margin-bottom: 1.25rem;
-    }
-    
-    .form-group:last-child {
-        margin-bottom: 0;
-    }
-    
-    .form-label {
-        display: block;
-        font-size: 0.875rem;
-        font-weight: 600;
-        color: var(--pq-gray-900);
-        margin-bottom: 0.5rem;
-    }
-    
-    .input-wrapper {
-        position: relative;
-    }
-    
-    .input-prefix {
-        position: absolute;
-        left: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        font-weight: 600;
-        color: var(--pq-gray-600);
-        font-size: 1rem;
-        pointer-events: none;
-    }
-    
-    .input-suffix {
-        position: absolute;
-        right: 1rem;
-        top: 50%;
-        transform: translateY(-50%);
-        font-weight: 600;
-        color: var(--pq-gray-600);
-        font-size: 1rem;
-        pointer-events: none;
-    }
-    
-    .form-input {
-        width: 100%;
-        padding: 1rem;
-        font-size: 1.125rem;
-        font-weight: 600;
-        border: 2px solid var(--pq-gray-200);
-        border-radius: 12px;
-        background: var(--pq-white);
-        transition: all 0.2s ease;
-        -webkit-appearance: none;
-    }
-    
-    .form-input.with-prefix {
-        padding-left: 3rem;
-    }
-    
-    .form-input.with-suffix {
-        padding-right: 3rem;
-    }
-    
-    .form-input:focus {
-        outline: none;
-        border-color: var(--pq-primary);
-        box-shadow: 0 0 0 4px rgba(0, 103, 71, 0.1);
-    }
-    
-    .form-input::placeholder {
-        color: var(--pq-gray-600);
-        opacity: 0.5;
-    }
-    
-    /* Buttons */
-    .btn {
-        width: 100%;
-        padding: 1rem;
-        font-size: 1rem;
-        font-weight: 700;
-        border: none;
-        border-radius: 12px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.5rem;
-        min-height: 56px;
-        touch-action: manipulation;
-    }
-    
-    .btn:active {
-        transform: scale(0.98);
-    }
-    
-    .btn-primary {
-        background: var(--pq-primary);
-        color: var(--pq-white);
-        box-shadow: var(--shadow-md);
-    }
-    
-    .btn-primary:active {
-        background: var(--pq-primary-dark);
-    }
-    
-    .btn-secondary {
-        background: var(--pq-white);
-        color: var(--pq-primary);
-        border: 2px solid var(--pq-primary);
-    }
-    
-    .btn-secondary:active {
-        background: var(--pq-primary-light);
-    }
-    
-    .button-group {
-        display: flex;
-        flex-direction: column;
-        gap: 0.75rem;
-    }
-    
-    /* Results */
-    .results-section {
-        display: none;
-    }
-    
-    .results-section.active {
-        display: block;
-        animation: slideUp 0.3s ease;
-    }
-    
-    @keyframes slideUp {
-        from {
-            opacity: 0;
-            transform: translateY(10px);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Pak-Qatar Calc">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#006838">
+    <title>Pak-Qatar Takaful Calculator</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-        to {
-            opacity: 1;
-            transform: translateY(0);
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #F5F5F5;
+            padding: 16px;
+            max-width: 500px;
+            margin: 0 auto;
         }
-    }
-    
-    .results-header {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-bottom: 1rem;
-        padding-bottom: 0.75rem;
-        border-bottom: 2px solid var(--pq-primary-light);
-    }
-    
-    .results-header h3 {
-        font-size: 1rem;
-        font-weight: 700;
-        color: var(--pq-primary);
-    }
-    
-    .result-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 0.75rem;
-    }
-    
-    .result-item {
-        background: linear-gradient(135deg, var(--pq-primary-light) 0%, var(--pq-white) 100%);
-        border: 2px solid var(--pq-primary-light);
-        border-radius: 12px;
-        padding: 1rem;
-        transition: all 0.2s ease;
-    }
-    
-    .result-item.primary {
-        background: var(--pq-primary);
-        color: var(--pq-white);
-        border-color: var(--pq-primary);
-    }
-    
-    .result-label {
-        font-size: 0.75rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        opacity: 0.8;
-        margin-bottom: 0.375rem;
-    }
-    
-    .result-value {
-        font-size: 1.75rem;
-        font-weight: 700;
-        letter-spacing: -0.02em;
-        word-break: break-word;
-    }
-    
-    .result-subtext {
-        font-size: 0.75rem;
-        margin-top: 0.25rem;
-        opacity: 0.7;
-    }
-    
-    /* Summary */
-    .summary-box {
-        background: var(--pq-primary-light);
-        border-radius: 12px;
-        padding: 1rem;
-        margin-top: 1rem;
-    }
-    
-    .summary-box p {
-        font-size: 0.875rem;
-        color: var(--pq-primary-dark);
-        font-weight: 600;
-    }
-    
-    /* Note */
-    .note-box {
-        background: var(--pq-gray-100);
-        border-left: 4px solid var(--pq-primary);
-        border-radius: 8px;
-        padding: 1rem;
-        margin-top: 1rem;
-    }
-    
-    .note-box strong {
-        display: block;
-        font-size: 0.875rem;
-        color: var(--pq-gray-900);
-        margin-bottom: 0.5rem;
-    }
-    
-    .note-box p {
-        font-size: 0.75rem;
-        color: var(--pq-gray-600);
-        line-height: 1.6;
-    }
-    
-    /* Footer */
-    .footer {
-        text-align: center;
-        padding: 2rem 1rem 1.5rem;
-        color: var(--pq-gray-600);
-    }
-    
-    .footer p {
-        font-size: 0.75rem;
-        margin-bottom: 0.25rem;
-    }
-    
-    .footer .developer {
-        font-weight: 600;
-        color: var(--pq-primary);
-    }
-    
-    /* Icons - SVG */
-    .icon {
-        width: 20px;
-        height: 20px;
-        flex-shrink: 0;
-    }
-    
-    /* Error Toast */
-    .toast {
-        position: fixed;
-        top: 80px;
-        left: 50%;
-        transform: translateX(-50%) translateY(-100px);
-        background: #DC2626;
-        color: white;
-        padding: 1rem 1.5rem;
-        border-radius: 12px;
-        box-shadow: var(--shadow-lg);
-        font-size: 0.875rem;
-        font-weight: 600;
-        z-index: 1000;
-        opacity: 0;
-        transition: all 0.3s ease;
-        max-width: 90%;
-        text-align: center;
-    }
-    
-    .toast.show {
-        opacity: 1;
-        transform: translateX(-50%) translateY(0);
-    }
-</style>
+        
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 24px 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid #E5E5E5;
+        }
+        
+        .logo img {
+            max-width: 280px;
+            width: 100%;
+            height: auto;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #000000;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 16px 0 4px 0;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #8B1538;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 24px;
+        }
+        
+        label {
+            display: block;
+            color: #1A1A1A;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #E0E0E0;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 18px;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #006838;
+            box-shadow: 0 0 0 3px rgba(0,104,56,0.1);
+        }
+        
+        button {
+            width: 100%;
+            background: linear-gradient(135deg, #006838 0%, #00512C 100%);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 8px;
+            box-shadow: 0 4px 12px rgba(0,104,56,0.3);
+        }
+        
+        button:active {
+            transform: scale(0.98);
+        }
+        
+        .result {
+            margin-top: 24px;
+            padding: 20px;
+            background: linear-gradient(135deg, #F0F9F4 0%, #E8F5E9 100%);
+            border-left: 4px solid #8B1538;
+            border-radius: 8px;
+            display: none;
+        }
+        
+        .result.show {
+            display: block;
+        }
+        
+        .result-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            font-size: 15px;
+        }
+        
+        .result-row:last-child {
+            margin-bottom: 0;
+            padding-top: 14px;
+            border-top: 2px solid #8B1538;
+            font-weight: 700;
+            font-size: 18px;
+            color: #006838;
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px solid #E5E5E5;
+            font-size: 11px;
+            color: #8B1538;
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <div class="logo-section">
-                <div class="logo-placeholder">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"></path>
-                    </svg>
-                </div>
-                <div class="brand-info">
-                    <h1>Pak-Qatar Family Takaful</h1>
-                    <p>Profit Calculator</p>
-                </div>
-            </div>
-            <div class="developer-credit">Developed by Zaid Nasir Khan</div>
+    <div class="container">
+        <div class="logo">
+            <img src="logo.png" alt="Pak-Qatar Takaful">
         </div>
-    </header>
-
-    <!-- Main Content -->
-    <main class="container">
-        <!-- Input Card -->
-        <div class="card">
-            <div class="card-header">
-                <h2>Calculate Your Profit</h2>
-                <p>Enter your investment details below</p>
+        
+        <h1>Profit Rate Calculator</h1>
+        <p class="subtitle">Together for Better</p>
+        
+        <label>Investment Amount (PKR)</label>
+        <input type="number" id="amount" placeholder="e.g. 100000">
+        
+        <label>Duration (Years)</label>
+        <input type="number" id="years" placeholder="e.g. 5">
+        
+        <label>Expected Profit Rate (%)</label>
+        <input type="number" id="rate" placeholder="e.g. 12" step="0.1">
+        
+        <button onclick="calculate()">Calculate Profit</button>
+        
+        <div class="result" id="result">
+            <div class="result-row">
+                <span>Principal Amount:</span>
+                <span id="principal">-</span>
             </div>
-            <div class="card-body">
-                <div class="form-group">
-                    <label class="form-label" for="amount">Investment Amount</label>
-                    <div class="input-wrapper">
-                        <span class="input-prefix">Rs</span>
-                        <input type="number" id="amount" class="form-input with-prefix" placeholder="100,000" inputmode="decimal" min="0" step="0.01">
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label class="form-label" for="rate">Annual Profit Rate</label>
-                    <div class="input-wrapper">
-                        <input type="number" id="rate" class="form-input with-suffix" placeholder="9.5" inputmode="decimal" min="0" max="100" step="0.01">
-                        <span class="input-suffix">%</span>
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button class="btn btn-primary" id="calcBtn">
-                        <svg class="icon" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M19 3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"></path>
-                        </svg>
-                        Calculate Now
-                    </button>
-                    <button class="btn btn-secondary" id="resetBtn">Reset</button>
-                </div>
+            <div class="result-row">
+                <span>Total Profit:</span>
+                <span id="profit">-</span>
+            </div>
+            <div class="result-row">
+                <span>Maturity Value:</span>
+                <span id="total">-</span>
             </div>
         </div>
-
-        <!-- Results Card -->
-        <div class="card results-section" id="resultsSection">
-            <div class="card-header">
-                <div class="results-header">
-                    <h3>Profit Breakdown</h3>
-                </div>
-            </div>
-            <div class="card-body">
-                <div class="result-grid">
-                    <div class="result-item primary">
-                        <div class="result-label">Yearly Profit</div>
-                        <div class="result-value" id="yearlyProfit">Rs 0.00</div>
-                    </div>
-                    
-                    <div class="result-item">
-                        <div class="result-label">Monthly Profit</div>
-                        <div class="result-value" id="monthlyProfit">Rs 0.00</div>
-                        <div class="result-subtext">Per month average</div>
-                    </div>
-                    
-                    <div class="result-item">
-                        <div class="result-label">Weekly Profit</div>
-                        <div class="result-value" id="weeklyProfit">Rs 0.00</div>
-                        <div class="result-subtext">Based on 52 weeks</div>
-                    </div>
-                    
-                    <div class="result-item">
-                        <div class="result-label">Daily Profit</div>
-                        <div class="result-value" id="dailyProfit">Rs 0.00</div>
-                        <div class="result-subtext">Based on 365 days</div>
-                    </div>
-                </div>
-
-                <div class="summary-box">
-                    <p id="summaryText">Investment: Rs 0 at 0% per annum</p>
-                </div>
-            </div>
+        
+        <div class="footer">
+            © Pak-Qatar Takaful Limited | Together for Better
         </div>
-
-        <!-- Disclaimer Note -->
-        <div class="note-box">
-            <strong>Important Note</strong>
-            <p>For illustration only. Actual profits are subject to Pak-Qatar Family Takaful terms and conditions. This calculator provides estimates based on the profit rate entered. Please consult with Pak-Qatar Family Takaful representatives for exact calculations and investment details.</p>
-        </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <p>© 2024 Pak-Qatar Family Takaful Limited</p>
-        <p>Shariah-Compliant Investment Solutions</p>
-        <p class="developer">Developed by Zaid Nasir Khan</p>
-    </footer>
-
-    <!-- Toast -->
-    <div class="toast" id="toast"></div>
+    </div>
 
     <script>
-        (function() {
-            'use strict';
+        function calculate() {
+            const amount = parseFloat(document.getElementById('amount').value);
+            const years = parseFloat(document.getElementById('years').value);
+            const rate = parseFloat(document.getElementById('rate').value);
             
-            const amountInput = document.getElementById('amount');
-            const rateInput = document.getElementById('rate');
-            const calcBtn = document.getElementById('calcBtn');
-            const resetBtn = document.getElementById('resetBtn');
-            const resultsSection = document.getElementById('resultsSection');
-            const toast = document.getElementById('toast');
-            
-            let toastTimeout;
-            
-            function formatNumber(num) {
-                return num.toLocaleString('en-US', {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                });
+            if (!amount || !years || !rate) {
+                alert('Please fill all fields');
+                return;
             }
             
-            function showToast(message) {
-                toast.textContent = message;
-                toast.classList.add('show');
-                clearTimeout(toastTimeout);
-                toastTimeout = setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 3000);
-            }
+            const profit = (amount * rate * years) / 100;
+            const total = amount + profit;
             
-            function calculate() {
-                const amount = parseFloat(amountInput.value);
-                const rate = parseFloat(rateInput.value);
-                
-                if (!amount || amount <= 0) {
-                    showToast('Please enter a valid investment amount');
-                    amountInput.focus();
-                    return;
-                }
-                
-                if (!rate || rate <= 0 || rate > 100) {
-                    showToast('Please enter a valid profit rate between 0 and 100');
-                    rateInput.focus();
-                    return;
-                }
-                
-                const yearly = amount * rate / 100;
-                const monthly = yearly / 12;
-                const weekly = yearly / 52;
-                const daily = yearly / 365;
-                
-                document.getElementById('yearlyProfit').textContent = 'Rs ' + formatNumber(yearly);
-                document.getElementById('monthlyProfit').textContent = 'Rs ' + formatNumber(monthly);
-                document.getElementById('weeklyProfit').textContent = 'Rs ' + formatNumber(weekly);
-                document.getElementById('dailyProfit').textContent = 'Rs ' + formatNumber(daily);
-                document.getElementById('summaryText').textContent = 
-                    'Investment: Rs ' + formatNumber(amount) + ' at ' + formatNumber(rate) + '% per annum';
-                
-                resultsSection.classList.add('active');
-            }
-            
-            function reset() {
-                amountInput.value = '';
-                rateInput.value = '';
-                resultsSection.classList.remove('active');
-                amountInput.focus();
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-            }
-            
-            // Event Listeners
-            calcBtn.addEventListener('click', calculate);
-            resetBtn.addEventListener('click', reset);
-            
-            // Auto calculate on Enter
-            [amountInput, rateInput].forEach(input => {
-                input.addEventListener('keypress', (e) => {
-                    if (e.key === 'Enter') {
-                        e.preventDefault();
-                        calculate();
-                    }
-                });
-                
-                // Instant calculation when both fields have values
-                input.addEventListener('input', () => {
-                    if (amountInput.value && rateInput.value) {
-                        calculate();
-                    } else {
-                        resultsSection.classList.remove('active');
-                    }
-                });
-            });
-            
-            // Prevent invalid input
-            [amountInput, rateInput].forEach(input => {
-                input.addEventListener('keydown', (e) => {
-                    if (e.key === '-' || e.key === 'e' || e.key === 'E') {
-                        e.preventDefault();
-                    }
-                });
-            });
-            
-        })();
+            document.getElementById('principal').textContent = 'PKR ' + amount.toLocaleString();
+            document.getElementById('profit').textContent = 'PKR ' + profit.toLocaleString();
+            document.getElementById('total').textContent = 'PKR ' + total.toLocaleString();
+            document.getElementById('result').classList.add('show');
+        }
+        
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('sw.js');
+        }
     </script>
-<script>(function(){document.addEventListener("click",function(e){var a=e.target.closest("[data-product-id]");if(!a)return;e.preventDefault();var pid=a.getAttribute("data-product-id");if(pid)parent.postMessage({type:"ecto-artifact-link-click",productId:pid},"*")})})();</script>
-<script>(function(){var loc=location.href.replace(/#.*$/,"");var ATTR_NAMES=["data-product-id","data-productid","data-product_id","product-id","productid","product_id","data-source-entity-id","source-entity-id","source_entity_id","data-product","data-metadata","data-meta"];var DATASET_KEYS=["productId","productid","product_id","sourceEntityId","sourceentityid","source_entity_id","product","metadata","meta"];function readProductId(value){if(typeof value!=="string"||value.length===0)return null;if(/^[0-9]{6,}$/.test(value))return value;var match=value.match(/(?:product(?:_|-)?id|source(?:_|-)?entity(?:_|-)?id)["'=:\s]+([0-9]{6,})/i);return match?match[1]:null}function extractProductId(start){for(var node=start;node&&node!==document.body;node=node.parentElement){for(var i=0;i<ATTR_NAMES.length;i++){var attrValue=node.getAttribute&&node.getAttribute(ATTR_NAMES[i]);var attrProductId=readProductId(attrValue);if(attrProductId)return attrProductId}var dataset=node.dataset||null;if(dataset){for(var j=0;j<DATASET_KEYS.length;j++){var dataValue=dataset[DATASET_KEYS[j]];var dataProductId=readProductId(dataValue);if(dataProductId)return dataProductId}}}return null}function isInlineMediaSlotElement(node){return !!(node&&node.getAttribute&&node.getAttribute("data-clippy-inline-media-slot")!==null)}function findInlineMediaSlot(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(isInlineMediaSlotElement(node))return node}return null}function readInlineMediaUrl(node){if(!node)return null;return node.getAttribute&&((node.getAttribute("data-clippy-inline-media-url")||node.getAttribute("data-url")||node.getAttribute("data_url")))||node.href||null}function stripHash(url){return String(url).replace(/#.*$/,"")}function urlsMatch(a,b){if(!a||!b)return false;try{return stripHash(new URL(a,loc).href)===stripHash(new URL(b,loc).href)}catch(_){return stripHash(a)===stripHash(b)}}function isFirstPartyReelUrl(value){try{var url=new URL(value,loc);if(url.protocol!=="https:")return false;var host=url.hostname.toLowerCase();var supported=host==="instagram.com"||host.endsWith(".instagram.com")||host==="facebook.com"||host.endsWith(".facebook.com");return supported&&/\/reels?\//i.test(url.pathname)}catch(_){return false}}function isInlineMediaUrlClick(node,href){var slot=findInlineMediaSlot(node);if(!slot)return false;var slotUrl=readInlineMediaUrl(slot);if(slotUrl)return urlsMatch(href,slotUrl);return isFirstPartyReelUrl(href)}function findDataHref(start){for(var node=start;node&&node!==document.body;node=node.parentElement){if(node.getAttribute){var href=node.getAttribute("data-href")||node.getAttribute("data-url");if(href)return{href:href,node:node}}}return null}var nativeOpen=window.open;window.open=function(url){if(parent!==window&&typeof url==="string"&&/^https?:\/\//.test(url)){parent.postMessage({type:"ecto:usercontent-link-click",href:url},"*");return null}return nativeOpen?nativeOpen.apply(window,arguments):null};document.addEventListener("click",function(e){var target=e.target instanceof Element?e.target:null;if(!target)return;if(parent===window)return;var a=target.closest?target.closest("a[href]"):null;if(a&&a.href&&/^https?:\/\//.test(a.href)&&a.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(a,a.href))return;var productId=extractProductId(target)||extractProductId(a);if(productId){e.preventDefault();parent.postMessage({type:"ecto-artifact-link-click",productId:productId},"*");return}e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:a.href},"*");return}var dataHref=findDataHref(target);if(dataHref&&/^https?:\/\//.test(dataHref.href)&&dataHref.href.replace(/#.*$/,"")!==loc){if(isInlineMediaUrlClick(dataHref.node,dataHref.href))return;e.preventDefault();parent.postMessage({type:"ecto:usercontent-link-click",href:dataHref.href},"*")}},true)})();</script><script>(function(){var FOCUS_TYPE="ecto:artifact-focus-request";var CLOSE_TYPE="ecto:artifact-close-request";function focusArtifactDocument(){var body=document.body;if(!body)return;try{window.focus();}catch(e){}if(!body.hasAttribute("tabindex"))body.setAttribute("tabindex","-1");try{body.focus({preventScroll:true});}catch(e){try{body.focus();}catch(e2){}}}window.addEventListener("message",function(event){if(event.source!==window.parent)return;var data=event.data;if(!data||typeof data!=="object"||data.type!==FOCUS_TYPE)return;if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",focusArtifactDocument,{once:true});return;}focusArtifactDocument();});window.addEventListener("keydown",function(event){if(event.key!=="Escape")return;window.setTimeout(function(){if(event.defaultPrevented)return;window.parent.postMessage({type:CLOSE_TYPE},"*");},0);});})();</script>
-</body></html>
+</body>
+</html>

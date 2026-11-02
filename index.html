@@ -183,23 +183,32 @@
 
     <script>
         function calculate() {
-            const amount = parseFloat(document.getElementById('amount').value);
-            const years = parseFloat(document.getElementById('years').value);
-            const rate = parseFloat(document.getElementById('rate').value);
-            
-            if (!amount || !years || !rate) {
-                alert('Please fill all fields');
-                return;
-            }
-            
-            const profit = (amount * rate * years) / 100;
-            const total = amount + profit;
-            
-            document.getElementById('principal').textContent = 'PKR ' + amount.toLocaleString();
-            document.getElementById('profit').textContent = 'PKR ' + profit.toLocaleString();
-            document.getElementById('total').textContent = 'PKR ' + total.toLocaleString();
-            document.getElementById('result').classList.add('show');
-        }
+    let amount = parseFloat(document.getElementById('amount').value);
+    let rate = parseFloat(document.getElementById('rate').value);
+    
+    if (!amount || !rate) {
+        alert('Amount aur Rate dalo');
+        return;
+    }
+    
+    let yearly = (amount * rate) / 100;
+    let monthly = yearly / 12;
+    let weekly = yearly / 52;
+    let daily = yearly / 365;
+    
+    document.getElementById('result').innerHTML = `
+        <div style="background:#f0f8ff; padding:20px; border-radius:12px; margin-top:20px;">
+            <h3 style="color:#8B1538; margin-top:0;">Profit Breakdown</h3>
+            <p><b>Investment:</b> PKR ${amount.toLocaleString()}</p>
+            <p><b>Rate:</b> ${rate}%</p>
+            <hr>
+            <p><b>Daily:</b> PKR ${daily.toFixed(2)}</p>
+            <p><b>Weekly:</b> PKR ${weekly.toFixed(2)}</p>
+            <p><b>Monthly:</b> PKR ${monthly.toFixed(2)}</p>
+            <p><b>Yearly:</b> PKR ${yearly.toFixed(2)}</p>
+        </div>
+    `;
+}
         
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.register('sw.js');

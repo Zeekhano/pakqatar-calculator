@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pakqatar-v2';
+const CACHE_NAME = 'pakqatar-calc-v2';
 const urlsToCache = [
   './',
   './index.html',
